@@ -3,11 +3,16 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Отрезок, на котором будет рассмотрена производная функции
 a = -10
 b = 10
 
+# Отрезок, на котором будет взят интеграл от функции
+c = 1
+d = 5
 
-def task(step):
+
+def derivative_task(step):
     f = MathFunction(lambda x: math.log(math.pow((4 - 3 * x ** 2) / (x ** 3 - 4 * x), 0.2)),
                      MathInterval(a, b),
                      [MathInterval(a, -2, True, False),
@@ -45,6 +50,67 @@ def task(step):
     plt.show()
 
 
-task(0.2)
-task(0.075)
-task(0.01)
+derivative_task(0.2)
+derivative_task(0.075)
+derivative_task(0.01)
+
+
+def integral_task(step):
+    f = MathFunction(lambda x: (6 + math.sqrt(x ** 3) + math.sqrt(x)) / (math.sqrt(x)),
+                     MathInterval(1, 5),
+                     [MathInterval(1, 5)],
+                     step)
+
+    antiderivative_f = MathFunction(lambda x: 12 * math.sqrt(x) + x ** 2 / 2 + x,
+                                    MathInterval(c, d),
+                                    [MathInterval(c, d)],
+                                    step)
+
+    integral_analytic = antiderivative_f.get_value(d) - antiderivative_f.get_value(c)
+
+    integral_rectangle = f.integral_rectangle(MathInterval(c, d))
+    integral_parabolic = f.integral_parabolic(MathInterval(c, d))
+    integral_trapezium = f.integral_trapezium(MathInterval(c, d))
+
+    integral_rectangle_error_absolute = math.fabs(integral_rectangle - integral_analytic)
+    integral_rectangle_error_relative = round(math.fabs(integral_rectangle_error_absolute / integral_analytic * 100), 1)
+    integral_parabolic_error_absolute = math.fabs(integral_parabolic - integral_analytic)
+    integral_parabolic_error_relative = round(math.fabs(integral_parabolic_error_absolute / integral_analytic * 100), 1)
+    integral_trapezium_error_absolute = math.fabs(integral_trapezium - integral_analytic)
+    integral_trapezium_error_relative = round(math.fabs(integral_trapezium_error_absolute / integral_analytic * 100), 1)
+
+    print("Результаты интегрирования функции f(x) на отрезке ["
+          + str(c)
+          + "; "
+          + str(d)
+          + "] с шагом "
+          + str(step)
+          + "\nАналитическое решение: "
+          + str(integral_analytic)
+          + "\n\nИнтегрирование методом прямоугольников: "
+          + str(integral_rectangle)
+          + "\nПогрешность: "
+          + str(integral_rectangle_error_absolute)
+          + " ( "
+          + str(integral_rectangle_error_relative)
+          + "% )"
+          + "\n\nИнтегрирование методом парабол: "
+          + str(integral_parabolic)
+          + "\nПогрешность: "
+          + str(integral_parabolic_error_absolute)
+          + " ( "
+          + str(integral_parabolic_error_relative)
+          + "% )"
+          + "\n\nИнтегрирование методом трапеций: "
+          + str(integral_trapezium)
+          + "\nПогрешность: "
+          + str(integral_trapezium_error_absolute)
+          + " ( "
+          + str(integral_trapezium_error_relative)
+          + "% )"
+          )
+
+
+integral_task(0.2)
+integral_task(0.075)
+integral_task(0.01)

@@ -87,6 +87,10 @@ class MathFunction:
         self.x = x_list
         self.y = y_list
 
+    def get_value(self,
+                  x: float):
+        return self.function(x)
+
     def inside_domain(self,
                       x: float):
         for interval in self.domain:
@@ -272,3 +276,30 @@ class MathFunction:
             else:
                 plt.plot(x_list, derivative_list, color=color)
             j += 1
+
+    def integral_rectangle(self,
+                           segment: MathInterval):
+        x_list = segment.get_elements_with_step(self.step)
+        y_list = np.array([self.function(x) for x in x_list])
+        integral_sum = 0
+        for i in range(0, len(x_list) - 1):
+            integral_sum += self.step * y_list[i]
+        return integral_sum
+
+    def integral_parabolic(self,
+                           segment: MathInterval):
+        x_list = segment.get_elements_with_step(self.step)
+        y_list = np.array([self.function(x) for x in x_list])
+        integral_sum = 0
+        for i in range(0, len(x_list) - 1):
+            integral_sum += (y_list[i] + y_list[i + 1] + 4 * self.function(x_list[i] + self.step / 2)) * self.step / 6
+        return integral_sum
+
+    def integral_trapezium(self,
+                           segment: MathInterval):
+        x_list = segment.get_elements_with_step(self.step)
+        y_list = np.array([self.function(x) for x in x_list])
+        integral_sum = 0
+        for i in range(0, len(x_list) - 1):
+            integral_sum += (y_list[i] + y_list[i + 1]) / 2 * self.step
+        return integral_sum
