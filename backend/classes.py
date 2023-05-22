@@ -1,10 +1,10 @@
+import math
 from typing import Callable
 
-from .exceptions import *
-
 import matplotlib.pyplot as plt
-import math
 import numpy as np
+
+from .exceptions import *
 
 PYTHON_ARITHMETIC_ERROR = 0.0001
 
@@ -47,6 +47,18 @@ class MathInterval:
         result.append(b - PYTHON_ARITHMETIC_ERROR)
 
         return result
+
+    def get_intersection_with_another_interval(self,
+                                               another=None):
+        if not isinstance(another, self.__class__):
+            raise MathIntervalIntersectionWrongParameter
+
+        new_start = max(self.start, another.start)
+        new_end = min(self.end, another.end)
+        new_include_start = self.number_inside(new_start) and another.number_inside(new_start)
+        new_include_end = self.number_inside(new_end) and another.number_inside(new_end)
+
+        return MathInterval(new_start, new_end, new_include_start, new_include_end)
 
     def inside(self,
                another=None):
@@ -102,7 +114,8 @@ class MathFunction:
              label: str = "",
              color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             x_list = []
             y_list = []
             for i in interval.get_elements_with_step(self.step):
@@ -118,7 +131,8 @@ class MathFunction:
     def plot_derivative_left(self,
                              color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -137,7 +151,8 @@ class MathFunction:
                                    derivative_analytic: Callable[[float], float],
                                    color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -156,7 +171,8 @@ class MathFunction:
     def plot_derivative_right(self,
                               color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -175,7 +191,8 @@ class MathFunction:
                                     derivative_analytic: Callable[[float], float],
                                     color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -194,7 +211,8 @@ class MathFunction:
     def plot_derivative_two_sided(self,
                                   color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -213,7 +231,8 @@ class MathFunction:
                                         derivative_analytic: Callable[[float], float],
                                         color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -232,7 +251,8 @@ class MathFunction:
     def plot_derivative_lagrange(self,
                                  color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -255,7 +275,8 @@ class MathFunction:
                                        derivative_analytic: Callable[[float], float],
                                        color: str = "#000000"):
         j = 0
-        for interval in self.domain:
+        for domain_interval in self.domain:
+            interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []

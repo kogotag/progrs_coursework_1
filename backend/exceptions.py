@@ -10,3 +10,10 @@ class MathIntervalStepError(Exception):
 
     def __str__(self):
         return "step больше длины промежутка"
+
+
+class MathIntervalIntersectionWrongParameter(Exception):
+    """Класс исключения для параметра метода get_intersection_with_another_interval"""
+
+    def __str__(self):
+        return "another должен быть MathInterval"
