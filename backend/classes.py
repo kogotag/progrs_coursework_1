@@ -1,6 +1,6 @@
 from typing import Callable
 
-from exceptions import *
+from .exceptions import *
 
 import matplotlib.pyplot as plt
 import math

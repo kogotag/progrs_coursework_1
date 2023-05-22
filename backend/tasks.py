@@ -1,18 +1,7 @@
-from classes import *
-import math
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Отрезок, на котором будет рассмотрена производная функции
-a = -10
-b = 10
-
-# Отрезок, на котором будет взят интеграл от функции
-c = 1
-d = 5
+from .classes import *
 
 
-def derivative_task(step):
+def derivative_task(step, a, b):
     f = MathFunction(lambda x: math.log(math.pow((4 - 3 * x ** 2) / (x ** 3 - 4 * x), 0.2)),
                      MathInterval(a, b),
                      [MathInterval(a, -2, True, False),
@@ -50,12 +39,7 @@ def derivative_task(step):
     plt.show()
 
 
-derivative_task(0.2)
-derivative_task(0.075)
-derivative_task(0.01)
-
-
-def integral_task(step):
+def integral_task(step, c, d):
     f = MathFunction(lambda x: (6 + math.sqrt(x ** 3) + math.sqrt(x)) / (math.sqrt(x)),
                      MathInterval(1, 5),
                      [MathInterval(1, 5)],
@@ -79,38 +63,14 @@ def integral_task(step):
     integral_trapezium_error_absolute = math.fabs(integral_trapezium - integral_analytic)
     integral_trapezium_error_relative = round(math.fabs(integral_trapezium_error_absolute / integral_analytic * 100), 1)
 
-    print("Результаты интегрирования функции f(x) на отрезке ["
-          + str(c)
-          + "; "
-          + str(d)
-          + "] с шагом "
-          + str(step)
-          + "\nАналитическое решение: "
-          + str(integral_analytic)
-          + "\n\nИнтегрирование методом прямоугольников: "
-          + str(integral_rectangle)
-          + "\nПогрешность: "
-          + str(integral_rectangle_error_absolute)
-          + " ( "
-          + str(integral_rectangle_error_relative)
-          + "% )"
-          + "\n\nИнтегрирование методом парабол: "
-          + str(integral_parabolic)
-          + "\nПогрешность: "
-          + str(integral_parabolic_error_absolute)
-          + " ( "
-          + str(integral_parabolic_error_relative)
-          + "% )"
-          + "\n\nИнтегрирование методом трапеций: "
-          + str(integral_trapezium)
-          + "\nПогрешность: "
-          + str(integral_trapezium_error_absolute)
-          + " ( "
-          + str(integral_trapezium_error_relative)
-          + "% )"
-          )
+    res = "Результаты интегрирования функции f(x) на отрезке [" + str(c) + "; " + str(d) + "] с шагом " + str(
+        step) + "\nАналитическое решение: " + str(
+        integral_analytic) + "\n\nИнтегрирование методом прямоугольников: " + str(
+        integral_rectangle) + "\nПогрешность: " + str(integral_rectangle_error_absolute) + " ( " + str(
+        integral_rectangle_error_relative) + "% )" + "\n\nИнтегрирование методом парабол: " + str(
+        integral_parabolic) + "\nПогрешность: " + str(integral_parabolic_error_absolute) + " ( " + str(
+        integral_parabolic_error_relative) + "% )" + "\n\nИнтегрирование методом трапеций: " + str(
+        integral_trapezium) + "\nПогрешность: " + str(integral_trapezium_error_absolute) + " ( " + str(
+        integral_trapezium_error_relative) + "% )"
 
-
-integral_task(0.2)
-integral_task(0.075)
-integral_task(0.01)
+    return res
