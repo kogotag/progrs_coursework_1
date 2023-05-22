@@ -1,5 +1,4 @@
 import sys
-from PyQt5.QtWidgets import *
 from backend.tasks import *
 from error_window import *
 
