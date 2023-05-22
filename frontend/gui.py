@@ -34,7 +34,7 @@ def try_integral_task(step, start, end, text_field: QTextEdit):
 app = QApplication(sys.argv)
 
 window = QWidget()
-window.setWindowTitle("Title")
+window.setWindowTitle("Программирование: курсовая")
 grid = QGridLayout()
 
 diffLabel = QLabel("Дифференцирование")

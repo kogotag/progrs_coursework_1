@@ -45,6 +45,10 @@ def integral_task(step, c, d):
                      [MathInterval(1, 5)],
                      step)
 
+    f.plot(label="y=y(x)")
+    plt.legend()
+    plt.show()
+
     antiderivative_f = MathFunction(lambda x: 12 * math.sqrt(x) + x ** 2 / 2 + x,
                                     MathInterval(c, d),
                                     [MathInterval(c, d)],
