@@ -53,12 +53,25 @@ class MathInterval:
         if not isinstance(another, self.__class__):
             raise MathIntervalIntersectionWrongParameter
 
+        if not self.do_intersect_another(another):
+            return None
+
         new_start = max(self.start, another.start)
         new_end = min(self.end, another.end)
         new_include_start = self.number_inside(new_start) and another.number_inside(new_start)
         new_include_end = self.number_inside(new_end) and another.number_inside(new_end)
 
         return MathInterval(new_start, new_end, new_include_start, new_include_end)
+
+    def do_intersect_another(self,
+                             another=None):
+        if not isinstance(another, self.__class__):
+            raise MathIntervalIntersectionWrongParameter
+
+        if self.number_inside(another.start) or another.number_inside(self.start):
+            return True
+        else:
+            return False
 
     def inside(self,
                another=None):
@@ -116,6 +129,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             x_list = []
             y_list = []
             for i in interval.get_elements_with_step(self.step):
@@ -133,6 +148,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -153,6 +170,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -173,6 +192,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -193,6 +214,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -213,6 +236,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -233,6 +258,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -253,6 +280,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
@@ -277,6 +306,8 @@ class MathFunction:
         j = 0
         for domain_interval in self.domain:
             interval = domain_interval.get_intersection_with_another_interval(self.desired_segment)
+            if interval is None:
+                continue
             interval_x = interval.get_elements_with_step(self.step)
             interval_y = np.array([self.function(i) for i in interval_x])
             x_list = []
