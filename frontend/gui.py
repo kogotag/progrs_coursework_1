@@ -171,6 +171,7 @@ class MainWindow(QWidget):
             return False
         return True
 
+    # TODO: remove
     def test(self):
         print("test")
 

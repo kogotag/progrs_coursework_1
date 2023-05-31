@@ -109,6 +109,7 @@ class MathFunction:
             x_list.append(i)
             y_list.append(function(i))
 
+        # TODO: not used
         self.x = x_list
         self.y = y_list
 
